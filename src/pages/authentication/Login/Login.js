@@ -43,7 +43,7 @@ const Login = () => {
 
     // spinner while after click login/google sign in
     if (loading || updating) {
-        return <Spinner></Spinner>;
+        return <Spinner message="Logging in..."></Spinner>;
     }
 
     // handle submit data

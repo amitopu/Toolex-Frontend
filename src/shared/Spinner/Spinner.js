@@ -4,7 +4,7 @@ import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 
 const Spinner = (props) => {
-    const { loadingMessage } = props;
+    const message = props.message;
     return (
         <div>
             <Header></Header>
@@ -12,7 +12,7 @@ const Spinner = (props) => {
                 <BallTriangle color="#b91c1c" height={100} width={100} />
             </div>
             <p className="ml-3 mt-3 mb-32 text-lg font-semibold text-center">
-                {loadingMessage ? { loadingMessage } : "Loading..."}
+                {message ? message : "Loading..."}
             </p>
             <Footer></Footer>
         </div>
