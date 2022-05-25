@@ -1,13 +1,21 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { signOut } from "firebase/auth";
+import auth from "../../firebase.init";
 
 const Header = () => {
+    const [user] = useAuthState(auth);
     const [toggle, setToggle] = useState(false);
     const activeStyle = {
         color: "white",
         padding: "8px",
         backgroundColor: "rgb(185 28 28)",
         borderRadius: "6px",
+    };
+
+    const logout = () => {
+        signOut(auth);
     };
 
     return (
@@ -46,17 +54,30 @@ const Header = () => {
                             </NavLink>
                             <div className="h-[1px] w-full bg-red-700 lg:hidden mt-2"></div>
                         </li>
-                        <li className="mr-4 text-lg font-semibold hover:text-red-700 p-2 text-center">
-                            <NavLink
-                                to="/login"
-                                style={({ isActive }) =>
-                                    isActive ? activeStyle : undefined
-                                }
-                            >
-                                My Account
-                            </NavLink>
-                            <div className="h-[1px] w-full bg-red-700 lg:hidden mt-2"></div>
-                        </li>
+
+                        {/* visiable based on user login */}
+                        {user ? (
+                            <li className="mr-4 text-lg font-semibold hover:text-red-700 p-2 text-center">
+                                <button onClick={logout}>
+                                    <span className="text-lg font-semibold">
+                                        Logout
+                                    </span>
+                                </button>
+                                <div className="h-[1px] w-full bg-red-700 lg:hidden mt-2"></div>
+                            </li>
+                        ) : (
+                            <li className="mr-4 text-lg font-semibold hover:text-red-700 p-2 text-center">
+                                <NavLink
+                                    to="/login"
+                                    style={({ isActive }) =>
+                                        isActive ? activeStyle : undefined
+                                    }
+                                >
+                                    Login
+                                </NavLink>
+                                <div className="h-[1px] w-full bg-red-700 lg:hidden mt-2"></div>
+                            </li>
+                        )}
                     </ul>
                 </div>
                 <div className="lg:hidden">

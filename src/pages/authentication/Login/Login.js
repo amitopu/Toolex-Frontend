@@ -1,18 +1,62 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Footer from "../../../shared/Footer/Footer";
 import Header from "../../../shared/Header/Header";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+    useAuthState,
+    useSignInWithEmailAndPassword,
+    useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
+import auth from "../../../firebase.init";
+import Spinner from "../../../shared/Spinner/Spinner";
 
 const Login = () => {
-    const navigate = useNavigate();
+    // sign in with email and pass hook
+    const [signInWithEmailAndPassword, , loading, error] =
+        useSignInWithEmailAndPassword(auth);
+
+    //sign in with google hook
+    const [signInWithGoogle, , updating, errorGoogle] =
+        useSignInWithGoogle(auth);
+
+    // hook for getting user object
+    const [user] = useAuthState(auth);
+
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm({ mode: "onBlur" });
 
-    const googleSignIn = () => {};
+    const navigate = useNavigate();
+    let location = useLocation();
+    const path = location.state?.from?.path || "/";
+
+    // manage navigation after login
+    useEffect(() => {
+        if (user) {
+            console.log(user);
+            navigate(path, { replace: true });
+        }
+    }, [user, path, navigate]);
+
+    // spinner while after click login/google sign in
+    if (loading || updating) {
+        return <Spinner></Spinner>;
+    }
+
+    // handle submit data
+    const onSubmit = async (data) => {
+        // console.log(data);
+        const { email, password } = data;
+        await signInWithEmailAndPassword(email, password);
+    };
+
+    // handle sign in with google
+    const googleSignIn = async () => {
+        await signInWithGoogle();
+    };
 
     return (
         <>
@@ -21,9 +65,12 @@ const Login = () => {
                 <h1 className="text-center text-3xl font-semibold mb-5">
                     Login to continue...
                 </h1>
-                <form>
+                <form onSubmit={handleSubmit(onSubmit)}>
                     {/* field for email */}
-                    <label className="block text-xl font-semibold lg:ml-[12.5%] md:ml-[10%] ml-[7.5%] mb-1 mt-2">
+                    <label
+                        htmlFor="email"
+                        className="block text-xl font-semibold lg:ml-[12.5%] md:ml-[10%] ml-[7.5%] mb-1 mt-2"
+                    >
                         Email
                     </label>
                     <input
@@ -43,10 +90,14 @@ const Login = () => {
                     )}
 
                     {/* field for password */}
-                    <label className="block text-xl font-semibold lg:ml-[12.5%] md:ml-[10%] ml-[7.5%] mb-1 mt-2">
+                    <label
+                        htmlFor="password"
+                        className="block text-xl font-semibold lg:ml-[12.5%] md:ml-[10%] ml-[7.5%] mb-1 mt-2"
+                    >
                         Password
                     </label>
                     <input
+                        type="password"
                         className="block lg:w-[75%] md:w-[80%] w-[85%] mx-auto border-2 border-red-700 h-10 px-3 rounded-md"
                         {...register("password", {
                             pattern: {
@@ -84,7 +135,7 @@ const Login = () => {
                         <button
                             className="text-red-700 ml-2 font-bold"
                             onClick={() => {
-                                navigate("/passwordreset");
+                                navigate("/resetpassword");
                             }}
                         >
                             Forgot Password
@@ -131,6 +182,12 @@ const Login = () => {
                     </span>
                     <span>SignIn With Google</span>
                 </button>
+                <p className="text-red-700 text-center mt-4">
+                    {error?.message}
+                </p>
+                <p className="text-red-700 text-center mt-4">
+                    {errorGoogle?.message}
+                </p>
             </div>
             <Footer></Footer>
         </>
