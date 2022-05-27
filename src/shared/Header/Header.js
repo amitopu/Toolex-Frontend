@@ -57,14 +57,19 @@ const Header = () => {
 
                         {/* visiable based on user login */}
                         {user ? (
-                            <li className="mr-4 text-lg font-semibold hover:text-red-700 p-2 text-center">
-                                <button onClick={logout}>
-                                    <span className="text-lg font-semibold">
-                                        Logout
-                                    </span>
-                                </button>
-                                <div className="h-[1px] w-full bg-red-700 lg:hidden mt-2"></div>
-                            </li>
+                            <>
+                                <li className="mr-4 text-lg font-semibold p-2 text-center">
+                                    {user.displayName}
+                                </li>
+                                <li className="mr-4 text-lg font-semibold hover:text-red-700 p-2 text-center">
+                                    <button onClick={logout}>
+                                        <span className="text-lg font-semibold">
+                                            Logout
+                                        </span>
+                                    </button>
+                                    <div className="h-[1px] w-full bg-red-700 lg:hidden mt-2"></div>
+                                </li>
+                            </>
                         ) : (
                             <li className="mr-4 text-lg font-semibold hover:text-red-700 p-2 text-center">
                                 <NavLink
