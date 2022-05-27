@@ -6,6 +6,10 @@ import Register from "./pages/authentication/Register/Register";
 import Blog from "./pages/Blog/Blog";
 import Home from "./pages/Home/Home";
 import NotFound from "./pages/NotFound/NotFound";
+import UserDashboard from "./pages/UserDashboard/UserDashboard";
+import AddReview from "./pages/users/AddReview/AddReview";
+import UserOrders from "./pages/users/UserOrders/UserOrders";
+import UserProfile from "./pages/users/UserProfile/UserProfile";
 import Spinner from "./shared/Spinner/Spinner";
 function App() {
     return (
@@ -21,6 +25,23 @@ function App() {
                     element={<PassReset></PassReset>}
                 ></Route>
                 <Route path="/spinner" element={<Spinner></Spinner>}></Route>
+                <Route
+                    path="userdashboard"
+                    element={<UserDashboard></UserDashboard>}
+                >
+                    <Route
+                        path="profile"
+                        element={<UserProfile></UserProfile>}
+                    ></Route>
+                    <Route
+                        path="orders"
+                        element={<UserOrders></UserOrders>}
+                    ></Route>
+                    <Route
+                        path="addreview"
+                        element={<AddReview></AddReview>}
+                    ></Route>
+                </Route>
                 <Route path="*" element={<NotFound></NotFound>}></Route>
             </Routes>
         </div>

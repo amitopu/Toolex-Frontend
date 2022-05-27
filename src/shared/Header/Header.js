@@ -59,7 +59,19 @@ const Header = () => {
                         {user ? (
                             <>
                                 <li className="mr-4 text-lg font-semibold p-2 text-center">
-                                    {user.displayName}
+                                    <span className="px-3">
+                                        {user.displayName}
+                                    </span>
+                                </li>
+                                <li className="mr-4 text-lg font-semibold hover:text-red-700 p-2 text-center">
+                                    <NavLink
+                                        to="/userdashboard"
+                                        style={({ isActive }) =>
+                                            isActive ? activeStyle : undefined
+                                        }
+                                    >
+                                        Dashboard
+                                    </NavLink>
                                 </li>
                                 <li className="mr-4 text-lg font-semibold hover:text-red-700 p-2 text-center">
                                     <button onClick={logout}>

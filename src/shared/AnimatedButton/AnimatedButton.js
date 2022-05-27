@@ -2,12 +2,18 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AnimatedButton = (props) => {
-    const { to, text } = props;
+    const { to, text, width } = props;
     const [animated, setAnimated] = useState(false);
     const navigate = useNavigate();
 
     return (
-        <div className="relative h-[35px] my-5 w-[350px] mx-auto">
+        <div
+            className={
+                width
+                    ? `relative h-[35px] my-5 w-[${width}px] mx-auto`
+                    : `relative h-[35px] my-5 w-[320px] mx-auto`
+            }
+        >
             <button
                 onClick={() => navigate(to)}
                 onMouseOver={() => {
@@ -21,8 +27,8 @@ const AnimatedButton = (props) => {
             <div
                 className={`${
                     animated
-                        ? "flex flex-col relative top-[-35px] left-0 justify-center w-[100%] h-[35px] bg-red-700 mx-auto z-0"
-                        : "flex flex-col relative top-[-35px] left-0 justify-center w-[0%] h-[35px] bg-red-700 mx-auto z-0"
+                        ? "flex relative top-[-35px] justify-center items-center w-[100%] h-[35px] bg-red-700 mx-auto z-0"
+                        : "flex relative top-[-35px] justify-center items-center w-[0%] h-[35px] bg-red-700 mx-auto z-0"
                 }
                         transition-all duration-700 ease-in-out`}
             >
