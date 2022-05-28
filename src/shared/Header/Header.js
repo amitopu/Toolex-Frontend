@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
@@ -6,6 +6,7 @@ import auth from "../../firebase.init";
 
 const Header = () => {
     const [user] = useAuthState(auth);
+    const [isAdmin, setIsAdmin] = useState(false);
     const [toggle, setToggle] = useState(false);
     const activeStyle = {
         color: "white",
@@ -13,6 +14,14 @@ const Header = () => {
         backgroundColor: "rgb(185 28 28)",
         borderRadius: "6px",
     };
+
+    useEffect(() => {
+        if (user && user.displayName === "Ami Topu") {
+            setIsAdmin(true);
+        } else {
+            setIsAdmin(false);
+        }
+    }, [user]);
 
     const logout = () => {
         signOut(auth);
@@ -65,7 +74,11 @@ const Header = () => {
                                 </li>
                                 <li className="mr-4 text-lg font-semibold hover:text-red-700 p-2 text-center">
                                     <NavLink
-                                        to="/userdashboard"
+                                        to={
+                                            isAdmin
+                                                ? "/admindashboard"
+                                                : "/userdashboard"
+                                        }
                                         style={({ isActive }) =>
                                             isActive ? activeStyle : undefined
                                         }

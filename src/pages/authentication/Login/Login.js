@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../../../shared/Footer/Footer";
 import Header from "../../../shared/Header/Header";
 import { useForm } from "react-hook-form";
@@ -10,8 +10,10 @@ import {
 } from "react-firebase-hooks/auth";
 import auth from "../../../firebase.init";
 import Spinner from "../../../shared/Spinner/Spinner";
+import axios from "axios";
 
 const Login = () => {
+    const [loadError, setLoadError] = useState(false);
     // sign in with email and pass hook
     const [signInWithEmailAndPassword, , loading, error] =
         useSignInWithEmailAndPassword(auth);
@@ -31,12 +33,31 @@ const Login = () => {
 
     const navigate = useNavigate();
     let location = useLocation();
-    const path = location.state?.from?.path || "/";
+    let path = location.state?.from?.pathname || "/";
 
     // manage navigation after login
     useEffect(() => {
-        if (user) {
-            console.log(user);
+        if (user?.providerData[0]?.providerId === "google.com") {
+            setLoadError(false);
+            // console.log(user);
+            axios
+                .post("http://localhost:5000/login", {
+                    uid: user.uid,
+                    name: user.displayName,
+                    email: user.email,
+                })
+                .then((res) => {
+                    if (res.data.acknowledged) {
+                        // console.log(res.data.acknowledged);
+                        navigate(path, { replace: true });
+                    } else {
+                        setLoadError(true);
+                    }
+                })
+                .catch((error) => setLoadError(true));
+        } else if (user) {
+            setLoadError(false);
+            // console.log("else");
             navigate(path, { replace: true });
         }
     }, [user, path, navigate]);
@@ -187,6 +208,11 @@ const Login = () => {
                 </p>
                 <p className="text-red-700 text-center mt-4">
                     {errorGoogle?.message}
+                </p>
+                <p className="text-red-700 text-center mt-4">
+                    {loadError
+                        ? "Something went wrong!! Please reload the page"
+                        : ""}
                 </p>
             </div>
             <Footer></Footer>

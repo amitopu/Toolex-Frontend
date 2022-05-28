@@ -1,8 +1,14 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import AddProduct from "./pages/admin/AddProduct/AddProduct";
+import AdminDashboard from "./pages/admin/AdminDashboard/AdminDashboard";
+import MakeAdmin from "./pages/admin/MakeAdmin/MakeAdmin";
+import ManageOrders from "./pages/admin/ManageOrders/ManageOrders";
+import ManageProducts from "./pages/admin/ManageProducts/ManageProducts";
 import Login from "./pages/authentication/Login/Login";
 import PassReset from "./pages/authentication/PassReset/PassReset";
 import Register from "./pages/authentication/Register/Register";
+import RequireAuth from "./pages/authentication/RequireAuth/RequireAuth";
 import Blog from "./pages/Blog/Blog";
 import Home from "./pages/Home/Home";
 import NotFound from "./pages/NotFound/NotFound";
@@ -25,9 +31,15 @@ function App() {
                     element={<PassReset></PassReset>}
                 ></Route>
                 <Route path="/spinner" element={<Spinner></Spinner>}></Route>
+
+                {/* user Dashboard */}
                 <Route
-                    path="userdashboard"
-                    element={<UserDashboard></UserDashboard>}
+                    path="/userdashboard"
+                    element={
+                        <RequireAuth>
+                            <UserDashboard></UserDashboard>
+                        </RequireAuth>
+                    }
                 >
                     <Route
                         path="profile"
@@ -42,6 +54,38 @@ function App() {
                         element={<AddReview></AddReview>}
                     ></Route>
                 </Route>
+
+                {/* admin Dashboard */}
+                <Route
+                    path="/admindashboard"
+                    element={
+                        <RequireAuth>
+                            <AdminDashboard></AdminDashboard>
+                        </RequireAuth>
+                    }
+                >
+                    <Route
+                        path="profile"
+                        element={<UserProfile></UserProfile>}
+                    ></Route>
+                    <Route
+                        path="manageorders"
+                        element={<ManageOrders></ManageOrders>}
+                    ></Route>
+                    <Route
+                        path="addproduct"
+                        element={<AddProduct></AddProduct>}
+                    ></Route>
+                    <Route
+                        path="makeadmin"
+                        element={<MakeAdmin></MakeAdmin>}
+                    ></Route>
+                    <Route
+                        path="manageproducts"
+                        element={<ManageProducts></ManageProducts>}
+                    ></Route>
+                </Route>
+
                 <Route path="*" element={<NotFound></NotFound>}></Route>
             </Routes>
         </div>

@@ -10,8 +10,11 @@ import {
 } from "react-firebase-hooks/auth";
 import auth from "../../../firebase.init";
 import Spinner from "../../../shared/Spinner/Spinner";
+import axios from "axios";
+import { getSuggestedQuery } from "@testing-library/react";
 
 const Register = () => {
+    const [loadError, setLoadError] = useState(false);
     const [match, setMatch] = useState(true);
     const navigate = useNavigate();
     const [createUserWithEmailAndPassword, , loading, error] =
@@ -29,8 +32,23 @@ const Register = () => {
     // for navigating user after creating account
     useEffect(() => {
         if (user) {
-            console.log(user);
-            navigate("/");
+            setLoadError(false);
+            // console.log(user);
+            axios
+                .post("http://localhost:5000/login", {
+                    uid: user.uid,
+                    name: user.displayName,
+                    email: user.email,
+                })
+                .then((res) => {
+                    if (res.data.acknowledged) {
+                        // console.log(res.data.acknowledged);
+                        navigate("/");
+                    } else {
+                        setLoadError(true);
+                    }
+                })
+                .catch((error) => setLoadError(true));
         }
     }, [user, navigate]);
 
@@ -178,6 +196,11 @@ const Register = () => {
                 </p>
                 <p className="text-red-700 text-center mt-3">
                     {updateError?.message}
+                </p>
+                <p className="text-red-700 text-center mt-3">
+                    {loadError
+                        ? "Something went wrong!! Please reload the page"
+                        : ""}
                 </p>
             </div>
             <Footer></Footer>
