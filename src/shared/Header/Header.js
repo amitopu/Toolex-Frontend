@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 import auth from "../../firebase.init";
+import axios from "axios";
 
 const Header = () => {
     const [user] = useAuthState(auth);
@@ -24,7 +25,17 @@ const Header = () => {
     }, [user]);
 
     const logout = () => {
-        signOut(auth);
+        axios
+            .post("http://localhost:5000/logout", {
+                uid: user.uid,
+                loggedIn: false,
+            })
+            .then((res) => {
+                if (res.data.acknowledged) {
+                    signOut(auth);
+                }
+            });
+        // signOut(auth);
     };
 
     return (

@@ -39,6 +39,7 @@ const Register = () => {
                     uid: user.uid,
                     name: user.displayName,
                     email: user.email,
+                    loggedIn: true,
                 })
                 .then((res) => {
                     if (res.data.acknowledged) {

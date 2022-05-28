@@ -37,7 +37,7 @@ const Login = () => {
 
     // manage navigation after login
     useEffect(() => {
-        if (user?.providerData[0]?.providerId === "google.com") {
+        if (user) {
             setLoadError(false);
             // console.log(user);
             axios
@@ -45,6 +45,7 @@ const Login = () => {
                     uid: user.uid,
                     name: user.displayName,
                     email: user.email,
+                    loggedIn: true,
                 })
                 .then((res) => {
                     if (res.data.acknowledged) {
@@ -55,10 +56,6 @@ const Login = () => {
                     }
                 })
                 .catch((error) => setLoadError(true));
-        } else if (user) {
-            setLoadError(false);
-            // console.log("else");
-            navigate(path, { replace: true });
         }
     }, [user, path, navigate]);
 
