@@ -7,7 +7,7 @@ const HomeProducts = () => {
     const [products, setProducts] = useState([]);
     useEffect(() => {
         axios
-            .get("http://localhost:5000/homeproducts")
+            .get("https://infinite-ocean-49945.herokuapp.com/homeproducts")
             .then((res) => {
                 console.log(res);
                 setProducts(res.data);

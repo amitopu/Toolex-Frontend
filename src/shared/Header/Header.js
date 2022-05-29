@@ -26,7 +26,7 @@ const Header = () => {
 
     const logout = () => {
         axios
-            .post("http://localhost:5000/logout", {
+            .post("https://infinite-ocean-49945.herokuapp.com/logout", {
                 uid: user.uid,
                 loggedIn: false,
             })

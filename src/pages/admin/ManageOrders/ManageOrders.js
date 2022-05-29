@@ -17,7 +17,7 @@ const ManageOrders = () => {
             const idToken = user.accessToken;
             setIdToken(idToken);
             axios
-                .get(`http://localhost:5000/allorders`, {
+                .get(`https://infinite-ocean-49945.herokuapp.com/allorders`, {
                     headers: {
                         authorization: "Bearer " + idToken,
                     },

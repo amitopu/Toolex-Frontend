@@ -16,7 +16,7 @@ const ManageProducts = () => {
     //getting total number of products
     useEffect(() => {
         axios
-            .get("http://localhost:5000/productscount", {
+            .get("https://infinite-ocean-49945.herokuapp.com/productscount", {
                 headers: {
                     authorization: "Bearer " + idToken,
                 },
@@ -32,11 +32,14 @@ const ManageProducts = () => {
     // getting all products
     useEffect(() => {
         axios
-            .get(`http://localhost:5000/products?page=${page}&size=${size}`, {
-                headers: {
-                    authorization: "Bearer " + idToken,
-                },
-            })
+            .get(
+                `https://infinite-ocean-49945.herokuapp.com/products?page=${page}&size=${size}`,
+                {
+                    headers: {
+                        authorization: "Bearer " + idToken,
+                    },
+                }
+            )
             .then((res) => {
                 const data = res.data.reverse();
                 setProducts(data);

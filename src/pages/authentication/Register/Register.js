@@ -35,7 +35,7 @@ const Register = () => {
             setLoadError(false);
             // console.log(user);
             axios
-                .post("http://localhost:5000/login", {
+                .post("https://infinite-ocean-49945.herokuapp.com/login", {
                     uid: user.uid,
                     name: user.displayName,
                     email: user.email,

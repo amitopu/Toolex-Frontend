@@ -23,11 +23,15 @@ const AddProduct = () => {
         // console.log(data);
         // console.log(idToken);
         axios
-            .post("http://localhost:5000/addproduct", data, {
-                headers: {
-                    authorization: "Bearer " + idToken,
-                },
-            })
+            .post(
+                "https://infinite-ocean-49945.herokuapp.com/addproduct",
+                data,
+                {
+                    headers: {
+                        authorization: "Bearer " + idToken,
+                    },
+                }
+            )
             .then((res) => {
                 console.log(res);
                 if (res.data.acknowledged) {

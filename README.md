@@ -25,5 +25,6 @@
 -   Cors v2.8.5
 -   Dotenv v16.0.1
 -   Nodemon v2.0.16
+-   firebase sdk
 
 Livelink -
