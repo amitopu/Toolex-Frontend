@@ -53,6 +53,7 @@ const ManageProducts = () => {
                     ></SingleProduct>
                 ))}
             </div>
+            <p className="text-red-700 text-center">{error}</p>
 
             {/* pagination section */}
             <div className="w-4/5 mx-auto flex justify-center mb-10">
