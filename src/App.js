@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import About from "./pages/About/About";
 import AddProduct from "./pages/admin/AddProduct/AddProduct";
 import AdminDashboard from "./pages/admin/AdminDashboard/AdminDashboard";
 import MakeAdmin from "./pages/admin/MakeAdmin/MakeAdmin";
@@ -27,6 +28,7 @@ function App() {
                 <Route path="/blog" element={<Blog></Blog>}></Route>
                 <Route path="/login" element={<Login></Login>}></Route>
                 <Route path="/register" element={<Register></Register>}></Route>
+                <Route path="/about" element={<About></About>}></Route>
                 <Route
                     path="/resetpassword"
                     element={<PassReset></PassReset>}
