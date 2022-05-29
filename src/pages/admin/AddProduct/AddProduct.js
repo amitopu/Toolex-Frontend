@@ -1,15 +1,49 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import auth from "../../../firebase.init";
 
 const AddProduct = () => {
+    const [authError, setAuthError] = useState("");
+    const [addError, setAddError] = useState("");
+    const [laoding, setLoading] = useState("");
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm({ mode: "onBlur" });
 
-    const onSubmit = (data) => {
-        console.log(data);
+    const navigate = useNavigate();
+
+    const onSubmit = async (data) => {
+        setAuthError("");
+        setLoading("Please wait. Loading...");
+        const idToken = await auth.currentUser.getIdToken(true);
+        // console.log(data);
+        // console.log(idToken);
+        axios
+            .post("http://localhost:5000/addproduct", data, {
+                headers: {
+                    authorization: "Bearer " + idToken,
+                },
+            })
+            .then((res) => {
+                console.log(res);
+                if (res.data.acknowledged) {
+                    setLoading("");
+                    navigate("/admindashboard/manageproducts");
+                } else {
+                    setAddError(
+                        "Product was not added successfully!! Try again later."
+                    );
+                    setLoading("");
+                }
+            })
+            .catch((err) => {
+                setAuthError(err?.message);
+                setLoading("");
+            });
     };
     return (
         <div>
@@ -103,7 +137,7 @@ const AddProduct = () => {
                 />
                 {errors.imageUrl && (
                     <p className="text-red-700 text-center">
-                        {errors.imgeUrl.message}
+                        {errors.imageUrl.message}
                     </p>
                 )}
 
@@ -209,12 +243,19 @@ const AddProduct = () => {
 
                 {/* for submit */}
                 <input
-                    className="block lg:w-[75%] md:w-[80%] w-[85%] mx-auto h-10 px-3 rounded-md mt-2 bg-red-700 text-white text-lg font-semibold hover:text-xl"
+                    className="block lg:w-[75%] md:w-[80%] w-[85%] mx-auto h-10 px-3 rounded-md mt-2 bg-red-700 text-white text-lg font-semibold cursor-pointer pointer-events-auto hover:text-xl"
                     type="submit"
                     name="submit"
                     value="Add Product"
                 />
             </form>
+            <p className="text-red-700 text-center font-bold mt-3">
+                {authError}
+            </p>
+            <p className="text-red-700 text-center font-bold mt-3">
+                {addError}
+            </p>
+            <p className="text-red-700 text-center font-bold mt-3">{laoding}</p>
         </div>
     );
 };

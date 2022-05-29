@@ -12,6 +12,7 @@ import RequireAuth from "./pages/authentication/RequireAuth/RequireAuth";
 import Blog from "./pages/Blog/Blog";
 import Home from "./pages/Home/Home";
 import NotFound from "./pages/NotFound/NotFound";
+import Order from "./pages/Order/Order";
 import UserDashboard from "./pages/UserDashboard/UserDashboard";
 import AddReview from "./pages/users/AddReview/AddReview";
 import UserOrders from "./pages/users/UserOrders/UserOrders";
@@ -85,6 +86,16 @@ function App() {
                         element={<ManageProducts></ManageProducts>}
                     ></Route>
                 </Route>
+
+                {/* order  */}
+                <Route
+                    path="/order/:id"
+                    element={
+                        <RequireAuth>
+                            <Order></Order>
+                        </RequireAuth>
+                    }
+                ></Route>
 
                 <Route path="*" element={<NotFound></NotFound>}></Route>
             </Routes>
