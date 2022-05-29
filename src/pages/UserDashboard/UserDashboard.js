@@ -1,9 +1,12 @@
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { NavLink, Outlet } from "react-router-dom";
+import auth from "../../firebase.init";
 import Footer from "../../shared/Footer/Footer";
 import Header from "../../shared/Header/Header";
 
 const UserDashboard = () => {
+    const [user] = useAuthState(auth);
     const activeStyle = {
         color: "rgb(185 28 28)",
         fontWeight: "bold",
@@ -21,7 +24,7 @@ const UserDashboard = () => {
                         <div className="p-4 md:block flex flex-wrap mx-auto w-fit justify-centeritems-center border-2 border-red-700">
                             <button className="block md:w-40 w-fit md:px-5 p-2 md:py-3 border-2 border-red-700 text-center md:text-lg text-sm font-semibold md:my-3 mx-2">
                                 <NavLink
-                                    to="/userdashboard/profile"
+                                    to={`/userdashboard/profile/${user?.uid}`}
                                     style={({ isActive }) =>
                                         isActive ? activeStyle : undefined
                                     }
@@ -31,7 +34,7 @@ const UserDashboard = () => {
                             </button>
                             <button className="block md:w-40 w-fit md:px-5 p-2 md:py-3 border-2 border-red-700 text-center md:text-lg text-sm font-semibold md:my-3 mx-2">
                                 <NavLink
-                                    to="/userdashboard/orders"
+                                    to={`/userdashboard/orders/${user?.uid}`}
                                     style={({ isActive }) =>
                                         isActive ? activeStyle : undefined
                                     }

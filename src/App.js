@@ -47,7 +47,7 @@ function App() {
                         element={<UserProfile></UserProfile>}
                     ></Route>
                     <Route
-                        path="orders"
+                        path="orders/:id"
                         element={<UserOrders></UserOrders>}
                     ></Route>
                     <Route

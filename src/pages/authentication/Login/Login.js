@@ -49,7 +49,7 @@ const Login = () => {
                 })
                 .then((res) => {
                     if (res.data.acknowledged) {
-                        // console.log(res.data.acknowledged);
+                        console.log(res.data.acknowledged);
                         navigate(path, { replace: true });
                     } else {
                         setLoadError(true);

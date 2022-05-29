@@ -42,7 +42,7 @@ const Order = () => {
                 })
                 .then((res) => {
                     setData(res.data);
-                    console.log(res.data);
+                    // console.log(res.data);
                 })
                 .catch((err) => {
                     setLoginError("Please login and try again");
@@ -66,8 +66,9 @@ const Order = () => {
         setLoading("Your Order Is Being generated...");
         const idToken = user.accessToken;
         const { address } = o;
+        const productId = data._id;
         const orderData = {
-            productId: data._id,
+            productId: data.productId,
             userId: user.uid,
             userName: user.displayName,
             productName: data.name,
@@ -78,21 +79,21 @@ const Order = () => {
             orderQuantity: orderQuantity,
         };
 
-        // axios
-        //     .post("http://localhost:5000/order", orderData, {
-        //         headers: {
-        //             authorization: "Bearer " + idToken,
-        //         },
-        //     })
-        //     .then((res) => {
-        //         if (res.data.acknowledged) {
-        //             navigate("/");
-        //         }
-        //     })
-        //     .catch((err) => {
-        //         setLoading("");
-        //         setOrderError(err.message);
-        //     });
+        axios
+            .post("http://localhost:5000/order", orderData, {
+                headers: {
+                    authorization: "Bearer " + idToken,
+                },
+            })
+            .then((res) => {
+                if (res.data.acknowledged) {
+                    navigate(`/userdashboard/orders/${user.uid}`);
+                }
+            })
+            .catch((err) => {
+                setLoading("");
+                setOrderError(err.message);
+            });
 
         console.log(orderData);
     };
