@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 import auth from "../../firebase.init";
@@ -9,6 +9,7 @@ const Header = () => {
     const [user] = useAuthState(auth);
     const [isAdmin, setIsAdmin] = useState(false);
     const [toggle, setToggle] = useState(false);
+    const navigate = useNavigate();
     const activeStyle = {
         color: "white",
         padding: "8px",
@@ -17,7 +18,7 @@ const Header = () => {
     };
 
     useEffect(() => {
-        if (user && user.displayName === "Ami Topu") {
+        if (user && (user.displayName === "Ami Topu" || "Kotipoy Balok")) {
             setIsAdmin(true);
         } else {
             setIsAdmin(false);
@@ -42,7 +43,9 @@ const Header = () => {
         <div className="sticky top-0 w-full z-20">
             <nav className="bg-white px-4 md:px-8 lg:px-16 flex justify-between items-center h-[85px] z-20">
                 <div className="text-3xl font-logo font-semibold z-20">
-                    <span className="text-red-700">Too</span>lex
+                    <button onClick={() => navigate("/")}>
+                        <span className="text-red-700">Too</span>lex
+                    </button>
                 </div>
                 <div
                     className={`${

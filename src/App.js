@@ -11,6 +11,7 @@ import PassReset from "./pages/authentication/PassReset/PassReset";
 import Register from "./pages/authentication/Register/Register";
 import RequireAuth from "./pages/authentication/RequireAuth/RequireAuth";
 import Blog from "./pages/Blog/Blog";
+import AllProducts from "./pages/Home/AllProducts/AllProducts";
 import Home from "./pages/Home/Home";
 import NotFound from "./pages/NotFound/NotFound";
 import Order from "./pages/Order/Order";
@@ -34,6 +35,14 @@ function App() {
                     element={<PassReset></PassReset>}
                 ></Route>
                 <Route path="/spinner" element={<Spinner></Spinner>}></Route>
+                <Route
+                    path="/allproducts"
+                    element={
+                        <RequireAuth>
+                            <AllProducts></AllProducts>
+                        </RequireAuth>
+                    }
+                ></Route>
 
                 {/* user Dashboard */}
                 <Route
