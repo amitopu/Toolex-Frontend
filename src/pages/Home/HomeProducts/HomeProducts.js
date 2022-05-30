@@ -26,6 +26,7 @@ const HomeProducts = () => {
                     ></SingleHomeProduct>
                 ))}
             </div>
+            <p className="text-red-700 text-center my-3">{error}</p>
             <AnimatedButton
                 text="All Products"
                 to="/allproducts"

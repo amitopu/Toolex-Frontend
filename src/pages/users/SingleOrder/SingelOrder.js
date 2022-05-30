@@ -1,7 +1,7 @@
 import React from "react";
 
 const SingelOrder = (props) => {
-    const { idToken, orderData } = props;
+    const { orderData } = props;
     return (
         <div className="px-5 mb-8">
             <h2 className="text-xl font-semibold mt-8 mb-5">

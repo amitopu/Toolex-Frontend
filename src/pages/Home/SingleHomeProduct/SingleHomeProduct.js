@@ -1,8 +1,4 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { Navigate, useNavigate } from "react-router-dom";
-import auth from "../../../firebase.init";
+import { useNavigate } from "react-router-dom";
 
 const SingleHomeProduct = ({ data }) => {
     const navigate = useNavigate();
