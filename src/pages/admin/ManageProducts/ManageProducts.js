@@ -41,7 +41,7 @@ const ManageProducts = () => {
                 }
             )
             .then((res) => {
-                const data = res.data.reverse();
+                const data = res.data;
                 setProducts(data);
             });
     }, [idToken, page, size]);
@@ -78,8 +78,10 @@ const ManageProducts = () => {
                         <button
                             key={num}
                             className={`${
-                                page === num ? "bg-red-700 text-semibold" : ""
-                            } text-white w-7 h-6 rounded bg-red-500 mx-[1px]`}
+                                page === num
+                                    ? "bg-red-700 text-semibold"
+                                    : "bg-red-500"
+                            } text-white w-7 h-6 rounded  mx-[1px]`}
                             onClick={() => setPage(num)}
                         >
                             {num + 1}

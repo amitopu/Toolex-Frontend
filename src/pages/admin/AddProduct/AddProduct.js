@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import auth from "../../../firebase.init";
@@ -7,7 +8,8 @@ import auth from "../../../firebase.init";
 const AddProduct = () => {
     const [authError, setAuthError] = useState("");
     const [addError, setAddError] = useState("");
-    const [laoding, setLoading] = useState("");
+    const [loading, setLoading] = useState("");
+    const [user] = useAuthState(auth);
     const {
         register,
         handleSubmit,
@@ -19,7 +21,7 @@ const AddProduct = () => {
     const onSubmit = async (data) => {
         setAuthError("");
         setLoading("Please wait. Loading...");
-        const idToken = await auth.currentUser.getIdToken(true);
+        const idToken = user.accessToken;
         // console.log(data);
         // console.log(idToken);
         axios
@@ -259,7 +261,7 @@ const AddProduct = () => {
             <p className="text-red-700 text-center font-bold mt-3">
                 {addError}
             </p>
-            <p className="text-red-700 text-center font-bold mt-3">{laoding}</p>
+            <p className="text-red-700 text-center font-bold mt-3">{loading}</p>
         </div>
     );
 };
