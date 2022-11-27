@@ -17,14 +17,11 @@ const UserOrders = () => {
             const idToken = user.accessToken;
             setIdToken(idToken);
             axios
-                .get(
-                    `https://infinite-ocean-49945.herokuapp.com/orders/${id}`,
-                    {
-                        headers: {
-                            authorization: "Bearer " + idToken,
-                        },
-                    }
-                )
+                .get(`https://toolex.onrender.com/orders/${id}`, {
+                    headers: {
+                        authorization: "Bearer " + idToken,
+                    },
+                })
                 .then((res) => {
                     setOrders(res.data);
                 });

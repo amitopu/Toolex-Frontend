@@ -18,7 +18,7 @@ const AllProducts = () => {
     //getting total number of products
     useEffect(() => {
         axios
-            .get("https://infinite-ocean-49945.herokuapp.com/productscount", {
+            .get("https://toolex.onrender.com/productscount", {
                 headers: {
                     authorization: "Bearer " + idToken,
                 },
@@ -35,7 +35,7 @@ const AllProducts = () => {
     useEffect(() => {
         axios
             .get(
-                `https://infinite-ocean-49945.herokuapp.com/products?page=${page}&size=${size}`,
+                `https://toolex.onrender.com/products?page=${page}&size=${size}`,
                 {
                     headers: {
                         authorization: "Bearer " + idToken,

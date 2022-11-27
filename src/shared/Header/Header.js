@@ -27,7 +27,7 @@ const Header = () => {
 
     const logout = () => {
         axios
-            .post("https://infinite-ocean-49945.herokuapp.com/logout", {
+            .post("https://toolex.onrender.com/logout", {
                 uid: user.uid,
                 loggedIn: false,
             })

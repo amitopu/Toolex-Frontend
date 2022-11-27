@@ -35,7 +35,7 @@ const Register = () => {
             setLoadError(false);
             // console.log(user);
             axios
-                .post("https://infinite-ocean-49945.herokuapp.com/login", {
+                .post("https://toolex.onrender.com/login", {
                     uid: user.uid,
                     name: user.displayName,
                     email: user.email,

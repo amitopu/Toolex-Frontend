@@ -29,14 +29,11 @@ const SingleProduct = ({ data }) => {
     const deleteProduct = (_id) => {
         if (window.confirm("Are you sure to delete item?")) {
             axios
-                .delete(
-                    `https://infinite-ocean-49945.herokuapp.com/deleteproduct/${_id}`,
-                    {
-                        headers: {
-                            authorization: "Bearer " + idToken,
-                        },
-                    }
-                )
+                .delete(`https://toolex.onrender.com/deleteproduct/${_id}`, {
+                    headers: {
+                        authorization: "Bearer " + idToken,
+                    },
+                })
                 .then((res) => {
                     console.log(res);
                     if (res.data.acknowledged) {

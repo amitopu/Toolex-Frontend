@@ -35,14 +35,11 @@ const Order = () => {
         if (user) {
             const idToken = user?.accessToken;
             axios
-                .get(
-                    `https://infinite-ocean-49945.herokuapp.com/product/${id}`,
-                    {
-                        headers: {
-                            authorization: "Bearer " + idToken,
-                        },
-                    }
-                )
+                .get(`https://toolex.onrender.com/product/${id}`, {
+                    headers: {
+                        authorization: "Bearer " + idToken,
+                    },
+                })
                 .then((res) => {
                     setData(res.data);
                     // console.log(res.data);
@@ -83,15 +80,11 @@ const Order = () => {
         };
 
         axios
-            .post(
-                "https://infinite-ocean-49945.herokuapp.com/order",
-                orderData,
-                {
-                    headers: {
-                        authorization: "Bearer " + idToken,
-                    },
-                }
-            )
+            .post("https://toolex.onrender.com/order", orderData, {
+                headers: {
+                    authorization: "Bearer " + idToken,
+                },
+            })
             .then((res) => {
                 if (res.data.acknowledged) {
                     navigate(`/userdashboard/orders/${user.uid}`);
